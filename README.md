@@ -47,7 +47,7 @@
 
       Here, your firebase.js file should be look like this,
 
-<!--
+
                                     import { initializeApp } from "firebase/app";
                                 import {
                                 GoogleAuthProvider,
@@ -141,7 +141,7 @@
                                 registerWithEmailAndPassword,
                                 sendPasswordReset,
                                 logout,
-                                }; -->
+                                };
 
                                 In which, we create functions for Authentication.
 
@@ -151,7 +151,6 @@
 
 Go to Login.js, and let’s look at how our login functionality works:
 
-<!--
                                 <!-- import React, { useEffect, useState } from "react";
                                 import { Link, useNavigate } from "react-router-dom";
                                 import { auth, signInWithEmailAndPassword, signInWithGoogle } from "./firebase";
@@ -205,13 +204,12 @@ Go to Login.js, and let’s look at how our login functionality works:
                                     </div>
                                 );
                                 }
-                                export default Login; --> -->
+                                export default Login; -->
 
 <!-- ----------------------------------------------Login.css---------------------------------------------- -->
 
 Go to Login.css and add the following styles.
 
-<!--
                                         .login {
                                         height: 100vh;
                                         width: 100vw;
@@ -244,7 +242,7 @@ Go to Login.css and add the following styles.
                                         }
                                         .login div {
                                         margin-top: 7px;
-                                        } -->
+                                        }
 
                                         Here’s what’s happening in the above code block. We are using the functions we made in firebase.js for authentication. We are also using react-firebase-hooks along with useEffect to track the authentication state of the user. So, if the user gets authenticated, the user will automatically get redirected to the dashboard.
 
@@ -255,7 +253,6 @@ Go to Login.css and add the following styles.
 
 let’s look at how the register functionality is implemented in the layout. Use this layout in Register.js
 
-<!--
                                     import React, { useEffect, useState } from "react";
                                     import { useAuthState } from "react-firebase-hooks/auth";
                                     import { Link, useHistory } from "react-router-dom";
@@ -319,13 +316,12 @@ let’s look at how the register functionality is implemented in the layout. Use
                                         </div>
                                     );
                                     }
-                                    export default Register; -->
+                                    export default Register;
 
 <!-- ---------------------------------------------Register.css------------------------------------------------------>
 
 Create a new component called Register to handle user registrations. Here are the styles for Register.css:
 
-<!--
                                             .register {
                                             height: 100vh;
                                             width: 100vw;
@@ -358,7 +354,7 @@ Create a new component called Register to handle user registrations. Here are th
                                             }
                                             .register div {
                                             margin-top: 7px;
-                                            } -->
+                                            }
 
                                             Here, we are using similar approach as we used in the Login component. We are just using the functions we previously created in firebase.js. Again, here we are using useEffect along with react-firebase-hooks to keep track of user authentication status.
 
@@ -367,7 +363,7 @@ Create a new component called Register to handle user registrations. Here are th
         -- Let’s look at resetting passwords. Create a new component called Reset
 
 <!-------------------------------------------------Reset.js--------------------------------------------------------->
-<!--
+
                                             import React, { useEffect, useState } from "react";
                                             import { useAuthState } from "react-firebase-hooks/auth";
                                             import { useNavigate } from "react-router-dom";
@@ -405,12 +401,12 @@ Create a new component called Register to handle user registrations. Here are th
                                                 </div>
                                             );
                                             }
-                                            export default Reset; -->
+                                            export default Reset;
 
                                              -- Similar to what we did for the Login and Register components.
 
 <!-- -------------------------------------------------------------Reset.css---------------------------------------------------------- -->
-<!--
+
                                                 .reset {
                                                 height: 100vh;
                                                 width: 100vw;
@@ -440,14 +436,14 @@ Create a new component called Register to handle user registrations. Here are th
                                                 }
                                                 .reset div {
                                                 margin-top: 7px;
-                                                } -->
+                                                }
 
 > > Dashboard
 
                 --Let’s focus on the dashboard. Create a new component called Dashboard
 
 <!-- -------------------------------------------------Dashboard.js----------------------------------------------------- -->
-<!--
+
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -455,69 +451,70 @@ import "./Dashboard.css";
 import { auth, db, logout } from "./firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 function Dashboard() {
-  const [user, loading, error] = useAuthState(auth);
-  const [name, setName] = useState("");
-  const navigate = useNavigate();
-  const fetchUserName = async () => {
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
-      setName(data.name);
-    } catch (err) {
-      console.error(err);
-      alert("An error occured while fetching user data");
-    }
-  };
-  useEffect(() => {
-    if (loading) return;
-    if (!user) return navigate("/");
-    fetchUserName();
-  }, [user, loading]);
-  return (
-    <div className="dashboard">
-       <div className="dashboard__container">
-        Logged in as
-         <div>{name}</div>
-         <div>{user?.email}</div>
-         <button className="dashboard__btn" onClick={logout}>
-          Logout
-         </button>
-       </div>
-     </div>
-  );
+const [user, loading, error] = useAuthState(auth);
+const [name, setName] = useState("");
+const navigate = useNavigate();
+const fetchUserName = async () => {
+try {
+const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+const doc = await getDocs(q);
+const data = doc.docs[0].data();
+setName(data.name);
+} catch (err) {
+console.error(err);
+alert("An error occured while fetching user data");
 }
-export default Dashboard; -->
+};
+useEffect(() => {
+if (loading) return;
+if (!user) return navigate("/");
+fetchUserName();
+}, [user, loading]);
+return (
+
+<div className="dashboard">
+<div className="dashboard__container">
+Logged in as
+<div>{name}</div>
+<div>{user?.email}</div>
+<button className="dashboard__btn" onClick={logout}>
+Logout
+</button>
+</div>
+</div>
+);
+}
+export default Dashboard;
 
 We are checking the authentication state. If the user is not authenticated, we redirect the user to the login page.
 
 <!-- ----------------------------------------------------------Dashboard.css------------------------------------------------------ -->
-<!--
+
 .dashboard {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+height: 100vh;
+width: 100vw;
+display: flex;
+align-items: center;
+justify-content: center;
 }
-.dashboard__container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background-color: #dcdcdc;
-  padding: 30px;
+.dashboard**container {
+display: flex;
+flex-direction: column;
+text-align: center;
+background-color: #dcdcdc;
+padding: 30px;
 }
-.dashboard__btn {
-  padding: 10px;
-  font-size: 18px;
-  margin-top: 10px;
-  border: none;
-  color: white;
-  background-color: black;
+.dashboard**btn {
+padding: 10px;
+font-size: 18px;
+margin-top: 10px;
+border: none;
+color: white;
+background-color: black;
 }
 .dashboard div {
-  margin-top: 7px;
-} -->
+margin-top: 7px;
+}
 
 > > App.js
 
@@ -525,7 +522,6 @@ We are checking the authentication state. If the user is not authenticated, we r
 
 Lastly, let’s add everything to the router. Your App.js should look like this:
 
-<!--
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./Login";
@@ -533,19 +529,20 @@ import Register from "./Register";
 import Reset from "./Reset";
 import Dashboard from "./Dashboard";
 function App() {
-  return (
-    <div className="app">
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<Login />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/reset" element={<Reset />} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      </Router>
-    </div>
-  );
+return (
+
+<div className="app">
+<Router>
+<Routes>
+<Route exact path="/" element={<Login />} />
+<Route exact path="/register" element={<Register />} />
+<Route exact path="/reset" element={<Reset />} />
+<Route exact path="/dashboard" element={<Dashboard />} />
+</Routes>
+</Router>
+</div>
+);
 }
-export default App; -->
+export default App;
 
 The app is fully functional!
