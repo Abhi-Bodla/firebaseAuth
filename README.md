@@ -407,142 +407,151 @@ Create a new component called Register to handle user registrations. Here are th
 
 <!-- -------------------------------------------------------------Reset.css---------------------------------------------------------- -->
 
-                                                .reset {
-                                                height: 100vh;
-                                                width: 100vw;
-                                                display: flex;
-                                                align-items: center;
-                                                justify-content: center;
-                                                }
-                                                .reset__container {
-                                                display: flex;
-                                                flex-direction: column;
-                                                text-align: center;
-                                                background-color: #dcdcdc;
-                                                padding: 30px;
-                                                }
-                                                .reset__textBox {
-                                                padding: 10px;
-                                                font-size: 18px;
-                                                margin-bottom: 10px;
-                                                }
-                                                .reset__btn {
-                                                padding: 10px;
-                                                font-size: 18px;
-                                                margin-bottom: 10px;
-                                                border: none;
-                                                color: white;
-                                                background-color: black;
-                                                }
-                                                .reset div {
-                                                margin-top: 7px;
-                                                }
+-- Reset.css
+
+                    .reset {
+                    height: 100vh;
+                    width: 100vw;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    }
+                    .reset**container {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    background-color: #dcdcdc;
+                    padding: 30px;
+                    }
+                    .reset**textBox {
+                    padding: 10px;
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                    }
+                    .reset\_\_btn {
+                    padding: 10px;
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                    border: none;
+                    color: white;
+                    background-color: black;
+                    }
+                    .reset div {
+                    margin-top: 7px;
+                    }
 
 > > Dashboard
 
-                --Let’s focus on the dashboard. Create a new component called Dashboard
+--Let’s focus on the dashboard. Create a new component called Dashboard
 
 <!-- -------------------------------------------------Dashboard.js----------------------------------------------------- -->
 
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
-import "./Dashboard.css";
-import { auth, db, logout } from "./firebase";
-import { query, collection, getDocs, where } from "firebase/firestore";
-function Dashboard() {
-const [user, loading, error] = useAuthState(auth);
-const [name, setName] = useState("");
-const navigate = useNavigate();
-const fetchUserName = async () => {
-try {
-const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-const doc = await getDocs(q);
-const data = doc.docs[0].data();
-setName(data.name);
-} catch (err) {
-console.error(err);
-alert("An error occured while fetching user data");
-}
-};
-useEffect(() => {
-if (loading) return;
-if (!user) return navigate("/");
-fetchUserName();
-}, [user, loading]);
-return (
+--Dashboard.js
 
-<div className="dashboard">
-<div className="dashboard__container">
-Logged in as
-<div>{name}</div>
-<div>{user?.email}</div>
-<button className="dashboard__btn" onClick={logout}>
-Logout
-</button>
-</div>
-</div>
-);
-}
-export default Dashboard;
+                                            import React, { useEffect, useState } from "react";
+                                            import { useAuthState } from "react-firebase-hooks/auth";
+                                            import { useNavigate } from "react-router-dom";
+                                            import "./Dashboard.css";
+                                            import { auth, db, logout } from "./firebase";
+                                            import { query, collection, getDocs, where } from "firebase/firestore";
+                                            function Dashboard() {
+                                            const [user, loading, error] = useAuthState(auth);
+                                            const [name, setName] = useState("");
+                                            const navigate = useNavigate();
+                                            const fetchUserName = async () => {
+                                            try {
+                                            const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+                                            const doc = await getDocs(q);
+                                            const data = doc.docs[0].data();
+                                            setName(data.name);
+                                            } catch (err) {
+                                            console.error(err);
+                                            alert("An error occured while fetching user data");
+                                            }
+                                            };
+                                            useEffect(() => {
+                                            if (loading) return;
+                                            if (!user) return navigate("/");
+                                            fetchUserName();
+                                            }, [user, loading]);
+                                            return (
 
-We are checking the authentication state. If the user is not authenticated, we redirect the user to the login page.
+                                            <div className="dashboard">
+                                            <div className="dashboard__container">
+                                            Logged in as
+                                            <div>{name}</div>
+                                            <div>{user?.email}</div>
+                                            <button className="dashboard__btn" onClick={logout}>
+                                            Logout
+                                            </button>
+                                            </div>
+                                            </div>
+                                            );
+                                            }
+
+                                            export default Dashboard;
+
+-- We are checking the authentication state. If the user is not authenticated, we redirect the user to the login page.
 
 <!-- ----------------------------------------------------------Dashboard.css------------------------------------------------------ -->
 
-.dashboard {
-height: 100vh;
-width: 100vw;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-.dashboard**container {
-display: flex;
-flex-direction: column;
-text-align: center;
-background-color: #dcdcdc;
-padding: 30px;
-}
-.dashboard**btn {
-padding: 10px;
-font-size: 18px;
-margin-top: 10px;
-border: none;
-color: white;
-background-color: black;
-}
-.dashboard div {
-margin-top: 7px;
-}
+-- Dashboard.css
+
+                        .dashboard {
+                        height: 100vh;
+                        width: 100vw;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        }
+                        .dashboard**container {
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        background-color: #dcdcdc;
+                        padding: 30px;
+                        }
+                        .dashboard**btn {
+                        padding: 10px;
+                        font-size: 18px;
+                        margin-top: 10px;
+                        border: none;
+                        color: white;
+                        background-color: black;
+                        }
+                        .dashboard div {
+                        margin-top: 7px;
+                        }
 
 > > App.js
 
+-- Lastly, let’s add everything to the router.
+
 <!-- -----------------------------------------App.js----------------------------------------------- -->
 
-Lastly, let’s add everything to the router. Your App.js should look like this:
+-- Your App.js should look like this:
 
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
-import Reset from "./Reset";
-import Dashboard from "./Dashboard";
-function App() {
-return (
+                    import "./App.css";
+                    import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+                    import Login from "./Login";
+                    import Register from "./Register";
+                    import Reset from "./Reset";
+                    import Dashboard from "./Dashboard";
+                    function App() {
+                    return (
 
-<div className="app">
-<Router>
-<Routes>
-<Route exact path="/" element={<Login />} />
-<Route exact path="/register" element={<Register />} />
-<Route exact path="/reset" element={<Reset />} />
-<Route exact path="/dashboard" element={<Dashboard />} />
-</Routes>
-</Router>
-</div>
-);
-}
-export default App;
+                    <div className="app">
+                    <Router>
+                    <Routes>
+                    <Route exact path="/" element={<Login />} />
+                    <Route exact path="/register" element={<Register />} />
+                    <Route exact path="/reset" element={<Reset />} />
+                    <Route exact path="/dashboard" element={<Dashboard />} />
+                    </Routes>
+                    </Router>
+                    </div>
+                    );
+                    }
+                    export default App;
 
-The app is fully functional!
+> > The app is fully functional!
